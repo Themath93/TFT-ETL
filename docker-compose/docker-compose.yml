@@ -1,0 +1,124 @@
+##################################################################
+# TFT-ETL Cluster
+
+#################################################################
+version: "3.8"
+
+x-extra_hosts:
+  &default-extra_hosts
+  - "tft-app:172.27.0.2"
+  - "hdfs:172.27.0.3"
+  - "kafka:172.27.0.4"
+  - "opensearch:172.27.0.5"
+  - "dashboard:172.27.0.6"
+  - "monitor:172.27.0.7"
+  - "airflow:172.27.0.8"
+
+services:
+  tft-app:
+    container_name: tft-app
+    restart: always
+    hostname: tft-app
+    privileged: true
+    image: yoonthemath/tft-app:1.0
+    volumes:
+      - /Users/byungwoyoon/Desktop/Projects/tft_project:/home/worker/tft-app
+    networks:
+      tft-net:
+        ipv4_address: 172.27.0.2
+    extra_hosts: *default-extra_hosts
+    ports:
+      - "3307:3306"
+
+  hdfs:
+    container_name: hdfs
+    restart: always
+    hostname: hdfs
+    privileged: true
+    image: yoonthemath/spark_hdfs_single:1.0
+    networks:
+      tft-net:
+        ipv4_address: 172.27.0.3
+    extra_hosts: *default-extra_hosts
+    ports:
+      - "18080:18080" 
+      - "9864:9864"
+      - "9870:9870"
+      - "8088:8088"
+      - "8888:8888"
+      - "4040:4040"
+
+  kafka:
+    container_name: kafka
+    restart: always
+    hostname: kafka
+    privileged: true
+    image: yoonthemath/kafka:1.0
+    networks:
+      tft-net:
+        ipv4_address: 172.27.0.4
+    extra_hosts: *default-extra_hosts
+    ports:
+      - "9095:9092"
+
+  opensearch:
+    container_name: opensearch
+    restart: always
+    hostname: opensearch
+    privileged: true
+    image: yoonthemath/opensearch_base:1.1
+    networks:
+      tft-net:
+        ipv4_address: 172.27.0.5
+    extra_hosts: *default-extra_hosts
+    ports:
+      - "9200:9200"
+
+  dashboard:
+    container_name: dashboard
+    restart: always
+    hostname: dashboard
+    privileged: true
+    image: yoonthemath/opensearch-dashboards:1.0
+    networks:
+      tft-net:
+        ipv4_address: 172.27.0.6
+    extra_hosts: *default-extra_hosts
+    ports:
+      - "5601:5601"
+
+  monitor:
+    container_name: monitor
+    restart: always
+    hostname: monitor
+    privileged: true
+    image: yoonthemath/opensearch-dashboards:1.0
+    networks:
+      tft-net:
+        ipv4_address: 172.27.0.7
+    extra_hosts: *default-extra_hosts
+    ports:
+      - "3000:3000"
+      - "9090:9090"
+
+  airflow:
+    container_name: airflow
+    restart: always
+    hostname: airflow
+    privileged: true
+    image: yoonthemath/airflow_standalone:1.0
+    volumes:
+      - /Users/byungwoyoon/Desktop/Projects/tft_project/dags:/home/worker/airflow/dags
+    networks:
+      tft-net:
+        ipv4_address: 172.27.0.8
+    extra_hosts: *default-extra_hosts
+    ports:
+      - "8080:8080"
+
+networks:
+  tft-net:
+    ipam:
+     config:
+       - subnet: 172.27.0.2/16
+         gateway: 172.27.0.1
