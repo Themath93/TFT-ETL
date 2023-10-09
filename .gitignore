@@ -83,8 +83,9 @@ profile_default/
 ipython_config.py
 
 
-# api_key
+# critical informations
 etl_pipeline/api_key.txt
+etl_pipeline/redis.txt
 
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is

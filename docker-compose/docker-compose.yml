@@ -13,6 +13,7 @@ x-extra_hosts:
   - "dashboard:172.27.0.6"
   - "monitor:172.27.0.7"
   - "airflow:172.27.0.8"
+  - "redis:172.27.0.9"
 
 services:
   tft-app:
@@ -115,6 +116,19 @@ services:
     extra_hosts: *default-extra_hosts
     ports:
       - "8080:8080"
+
+  redis:
+    container_name: redis
+    restart: always
+    hostname: redis
+    privileged: true
+    image: yoonthemath/redis:1.1
+    networks:
+      tft-net:
+        ipv4_address: 172.27.0.9
+    extra_hosts: *default-extra_hosts
+    ports:
+      - "6379:6379"
 
 networks:
   tft-net:

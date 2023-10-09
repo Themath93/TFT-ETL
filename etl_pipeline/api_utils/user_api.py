@@ -1,29 +1,34 @@
 import json
 import requests
 
+
+
+from api_utils.api_util import limit_counter
+
 class UserAPI:
+    """
+    Roit Games TFT(TeamFigth Tactics) Users Infomations Extractor
     
+    
+    Parameters
+    ----------
+    api_key : str
+            the value of api_key or token which is generated from RIOT GAMES API (https://developer.riotgames.com)
+    tier : str
+            tier
+            example : "BRONE", "SILVER" ...
+    division : str
+            division string
+            only use one of ['I', 'II', 'III', 'IV']
+    """
     
     def __init__(self,api_key=str,tier=str,division=str,page=int) -> None:
-        """
-        Roit Games TFT(TeamFigth Tactics) Users Infomations Extractor
         
-        
-        Parameters
-        ----------
-        api_key : str
-                the value of api_key or token which is generated from RIOT GAMES API (https://developer.riotgames.com)
-        tier : str
-                tier
-                example : "BRONE", "SILVER" ...
-        division : str
-                division string
-                only use one of ['I', 'II', 'III', 'IIII']
-        """
         self.api_key = api_key
         self.tier = tier
         self.division = division
         url = f"https://kr.api.riotgames.com/tft/league/v1/entries/{self.tier}/{self.division}?page={str(page)}&api_key={self.api_key}"
+        limit_counter()
         self.res_json = json.loads(requests.get(url).text)
         
     def get_whole_data(self) -> dict:
