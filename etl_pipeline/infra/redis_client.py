@@ -60,7 +60,7 @@ class RedisAPILimitCounter:
             if key_exists == 1 :
                 api_counter = self.get()
                 if api_counter >= (self.request_limit-1) :
-                    os.system(f'echo "Your requests are going to limit.\nBegin Time Sleep for 1200 seconds."')
+                    os.system(f'echo "Your requests are going to limit.\nBegin Time Sleep for 120 seconds."')
                     time.sleep(self.ex_time)
                     self.conn_redis.setex(name=self.key, time=self.ex_time, value=self.init_num)
                 

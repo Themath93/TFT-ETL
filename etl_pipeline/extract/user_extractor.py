@@ -4,7 +4,6 @@ import json
 
 from api_utils.user_api import UserAPI
 from api_utils.high_user_api import HighUserAPI
-from api_utils.match_api import MatchIdAPI, MatchDetailAPI
 from infra.kafka_client import MessageProducer
 
 
@@ -49,3 +48,5 @@ class UserExtractor:
                     else :
                         p_num = 1
                         break
+
+UserExtractor().extract()
