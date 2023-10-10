@@ -14,7 +14,7 @@ class MatchIdAPI:
         the value of api_key or token which is generated from RIOT GAMES API (https://developer.riotgames.com)
     puuid : str
         the unique value of TFT SummonerId
-    start_time : int default four hour before
+    start_time : int default 1623801600 : June 16th, 2021
         Epoch timestamp in seconds.
         The matchlist started storing timestamps on June 16th, 2021.\n
         Any matches played before June 16th, 2021 won't be included in the results if the startTime filter is set.
@@ -25,9 +25,9 @@ class MatchIdAPI:
     
     """
     current_time = int(time.time())
-    four_hour_before = current_time - 3600
+    from_the_first = 1623801600 # 2021-06-16
     
-    def __init__(self,api_key=str,puuid=str,start_time=four_hour_before,end_time=current_time,count=20) -> None:
+    def __init__(self,api_key=str,puuid=str,start_time=from_the_first,end_time=current_time,count=20) -> None:
         self.start_time = start_time
         self.end_time = end_time
         self.api_key = api_key

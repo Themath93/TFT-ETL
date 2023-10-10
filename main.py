@@ -1,33 +1,27 @@
 import os
 import sys
 
-from etl_pipeline.api_utils.datadragon_api import DataDragonExtractor
-
-print(DataDragonExtractor)
-def test() :
-    print("called")
 
 def main():
     """ Main entry point of the app """
 
 
-    # return works
-# works = main()
+
 
 if __name__ == "__main__":
     """ This is executed when run from the command line """
     args = sys.argv
     
-    # if args[1] not in works.keys() :
-    #     raise Exception("첫번째 전달인자가 이상함 >> " +str(works.keys()))
-    # if args[2] not in works[args[1]].keys() :
-    #     raise Exception("두번째 전달인자가 이상함 >> " +str(works[args[1]].keys()))
+    if args[1] not in works.keys() :
+        raise Exception("첫번째 전달인자가 이상함 >> " +str(works.keys()))
+    if args[2] not in works[args[1]].keys() :
+        raise Exception("두번째 전달인자가 이상함 >> " +str(works[args[1]].keys()))
     
-    # print(len(args))
+    print(len(args))
     
-    # if len(args) == 3 :
-    #     work = works[args[1]][args[2]]
-    #     work()
-    # else :
-    #     work = works[args[1]][args[2]]
-    #     work(int(args[3]))
+    if len(args) == 3 :
+        work = works[args[1]][args[2]]
+        work()
+    else :
+        work = works[args[1]][args[2]]
+        work(int(args[3]))

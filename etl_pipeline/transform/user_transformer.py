@@ -2,7 +2,7 @@
 import json
 
 from infra.kafka_client import Consumer
-from transform.db_class import UserInfo
+from infra.db_class import UserInfo
 
 
 class UserTransformer:
@@ -28,4 +28,4 @@ class UserTransformer:
                     else :
                         data = list(map(lambda e:1 if e == True else e,m.values()))
                         data = list(map(lambda e:0 if e == False else e,data))
-                        UserInfo(data=data).insert()
+                        UserInfo.insert(data=data)
