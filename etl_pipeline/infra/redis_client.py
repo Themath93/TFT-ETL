@@ -1,5 +1,4 @@
 
-
 import os
 import time
 
@@ -7,7 +6,7 @@ import redis
 
 class RedisAPILimitCounter:    
     """Redis Counter"""
-    def __init__(self, conn_redis, key=str, is_counter_reset=False, ex_time=1200, init_num=1, reqeust_limit=200):
+    def __init__(self, conn_redis, key=str, is_counter_reset=False, ex_time=120, init_num=1, request_limit=100):
         """
         
         
@@ -19,19 +18,19 @@ class RedisAPILimitCounter:
             redis key
         is_counter_reset : bool default False
             if True redis key's counter is initialized.
-        ex_time : int default 1200 == 2 minutes
+        ex_time : int default 120 == 2 minutes
             set redis key's expire time.
             sey as your API_KEY limit time.
-        init_num : int default 0
+        init_num : int default 1
             initial number of redis key's count.
-        reqeust_limit : int default 200
+        reqeust_limit : int default 100
             API request limit.\n
-            if your API-KEY is production level use 200. 
+            if your API-KEY is production level use 100. 
         """
         self.conn_redis = conn_redis
         self.key  = key
         self.ex_time = ex_time
-        self.request_limit = reqeust_limit
+        self.request_limit = request_limit
         if isinstance(init_num, int) is False:
             raise Exception("init_num must be integer data type")             
         self.init_num = init_num
@@ -41,10 +40,18 @@ class RedisAPILimitCounter:
 
     def plus(self, int_plus_num=1, is_error_reset=True):
         """
-          카운터에 정수형 숫자(기본:1)를 더한 숫자를 리턴한다
-          :param int_plus_num:int: 정수형 숫자
-          :param is_error_reset:bool: 오류발생시 카운터를 초기값으로 리셋여부
-          :return counter_number:int: 더해진 최종 카운터 값
+        카운터에 정수형 숫자(기본:1)를 더한 숫자를 리턴한다
+
+        Returns counter_number : int
+        ---------
+        
+        Parameters
+        ----------
+        int_plus_num : int default 1
+            the value of add to KEY.
+        is_error_reset : bool default True
+            whether or not reset KEY when error occured.
+        
         """
         if isinstance(int_plus_num, int) is False:
             raise Exception("int_plus_num must be integer data type")
@@ -70,14 +77,13 @@ class RedisAPILimitCounter:
             else:
                 pass
     def get(self):
-        """ :return counter_number:int: 현재 카운터 값"""
+        """returns counter_number:int: 현재 카운터 값"""
         return int(self.conn_redis.get(name=self.key))
 
     def reset(self):
         """"reset count"""
         self.conn_redis.setex(name=self.key, time=self.ex_time , value=self.init_num)
     
-    # @classmethod
     def exists(self):
         """
         returns if your key exists

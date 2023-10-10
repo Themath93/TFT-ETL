@@ -57,5 +57,3 @@ class DataDragonExtractor:
             path = f"/{self.base_path}/{self.version}/{self.asset}"
             data = json.dumps(self.data_dragon_api(), ensure_ascii=False)
             hdfs_client.write(path,data=data,encoding="utf-8")
-
-DataDragonExtractor("all").to_hdfs()

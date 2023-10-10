@@ -21,7 +21,7 @@ def get_latest_version() -> str:
 def limit_counter() -> None:
     """
     RIOT API limit Controller
-    In production level api limit is 200 in 2 minutes.\n
+    In production level api limit is 100 in 2 minutes.\n
     this module used for avoid api reqeusts limit.
     """
     
