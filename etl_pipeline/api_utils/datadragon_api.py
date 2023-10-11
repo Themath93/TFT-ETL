@@ -2,7 +2,7 @@ import json
 import requests
 
 
-from api_utils.api_util import get_latest_version
+from etl_pipeline.api_utils.api_util import get_latest_version
 
 class DataDragonAPI:
     """

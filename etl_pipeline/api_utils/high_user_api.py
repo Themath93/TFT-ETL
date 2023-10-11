@@ -3,7 +3,7 @@ import requests
 import json
 import time
 
-from api_utils.api_util import limit_counter
+from etl_pipeline.api_utils.api_util import limit_counter
 
 class HighUserAPI:
     

@@ -2,7 +2,7 @@ import json
 import requests
 import time
 
-from api_utils.api_util import limit_counter
+from etl_pipeline.api_utils.api_util import limit_counter
 
 class MatchIdAPI:
     """
@@ -98,7 +98,7 @@ class MatchDetailAPI:
             limit_counter()
             res = requests.get(url=url).text
             tmp.append(json.loads(res))
-            time.sleep(0.5)
+            time.sleep(0.05)
             
         result = {
             "match_ids": match_ids,

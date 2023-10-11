@@ -3,7 +3,7 @@ import requests
 
 import redis
 
-from infra.redis_client import RedisAPILimitCounter
+from etl_pipeline.infra.redis_client import RedisAPILimitCounter
 
 def get_latest_version() -> str:
     """
@@ -24,8 +24,8 @@ def limit_counter() -> None:
     In production level api limit is 100 in 2 minutes.\n
     this module used for avoid api reqeusts limit.
     """
-    
-    redis_txt = open("redis.txt","r").readline()
+    base_path = "/home/worker/tft-app/etl_pipeline/"
+    redis_txt = open(f"{base_path}redis.txt","r").readline()
     redis_info = redis_txt.split(",")
     conn_redis = redis.Redis(host="redis",password=redis_info[0])
     limit_counter = RedisAPILimitCounter(conn_redis=conn_redis,key=redis_info[1])

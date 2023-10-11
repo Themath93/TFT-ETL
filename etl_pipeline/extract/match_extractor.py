@@ -1,9 +1,9 @@
 
 
-from api_utils.match_api import MatchIdAPI
-from api_utils.match_api import MatchDetailAPI
-from infra.kafka_client import MessageProducer
-from infra.db_class import UserInfo
+from etl_pipeline.api_utils.match_api import MatchIdAPI
+from etl_pipeline.api_utils.match_api import MatchDetailAPI
+from etl_pipeline.infra.kafka_client import MessageProducer
+from etl_pipeline.infra.db_class import UserInfo
 
 
 
@@ -11,7 +11,8 @@ class MatchIdExtractor:
     
     broker=["kafka:19092"]
     topic="match-id"
-    with open("api_key.txt", "r") as f:
+    base_path = "/home/worker/tft-app/etl_pipeline/"
+    with open(f"{base_path}api_key.txt", "r") as f:
         api_key = f.readline()
     def __init__(self,tier="all") -> None:
         self.kafka_producer = kafka_producer = MessageProducer(broker=self.broker,topic=self.topic)

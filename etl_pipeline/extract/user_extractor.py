@@ -2,9 +2,9 @@ import time
 import json
 
 
-from api_utils.user_api import UserAPI
-from api_utils.high_user_api import HighUserAPI
-from infra.kafka_client import MessageProducer
+from etl_pipeline.api_utils.user_api import UserAPI
+from etl_pipeline.api_utils.high_user_api import HighUserAPI
+from etl_pipeline.infra.kafka_client import MessageProducer
 
 
 class UserExtractor:
@@ -23,7 +23,8 @@ class UserExtractor:
     
     divisions = ["I"*i for i in range(1,4)] + ["IV"]
     tiers = ["IRON", "BRONZE", "SILVER", "GOLD", "PLATINUM", "DIAMOND"]
-    api_key = open("api_key.txt", "r").readline()
+    base_path = "/home/worker/tft-app/etl_pipeline/"
+    api_key = open(f"{base_path}api_key.txt", "r").readline()
     
     def __init__(self,kafka_topic="tft-user-info") -> None:
         self.topic = kafka_topic

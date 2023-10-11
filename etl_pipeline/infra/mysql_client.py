@@ -6,7 +6,8 @@ def mysql_cnx() -> object:
     """
     returns mysql connetion object if connected.
     """
-    with open("mysql.txt", "r") as f:
+    base_path = "/home/worker/tft-app/etl_pipeline/"
+    with open(f"{base_path}mysql.txt", "r") as f:
         mysql_info = f.readline().split(",")
     try:
         cnx = connector.connect(

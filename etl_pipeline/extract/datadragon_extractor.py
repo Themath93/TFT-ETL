@@ -3,9 +3,9 @@
 import time
 import json
 
-from api_utils.datadragon_api import DataDragonAPI
-from api_utils.api_util import get_latest_version
-from infra.hdfs_client import get_client
+from etl_pipeline.api_utils.datadragon_api import DataDragonAPI
+from etl_pipeline.api_utils.api_util import get_latest_version
+from etl_pipeline.infra.hdfs_client import get_client
 
 
 class DataDragonExtractor:
@@ -41,7 +41,7 @@ class DataDragonExtractor:
             self.data_dragon_api = DataDragonAPI(asset=self.asset,version=get_latest_version()).get_data
     
     
-    def to_hdfs(self) -> None:
+    def extract(self) -> None:
         """
         Save data to Hadoop HDFS
         """

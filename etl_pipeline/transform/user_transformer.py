@@ -1,13 +1,13 @@
 
 import json
 
-from infra.kafka_client import Consumer
-from infra.db_class import UserInfo
+from etl_pipeline.infra.kafka_client import Consumer
+from etl_pipeline.infra.db_class import UserInfo
 
 
 class UserTransformer:
     topic = "tft-user-info"
-    groud_id = "tft_consumer"
+    groud_id = "UserTransformer-python"
     broker=["kafka:19092"]
     
     def __init__(self) -> None:
