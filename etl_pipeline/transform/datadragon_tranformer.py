@@ -3,13 +3,13 @@ import json
 from etl_pipeline.api_utils.api_util import get_latest_version
 from etl_pipeline.infra.hdfs_client import get_client
 from etl_pipeline.infra.mysql_client import mysql_cnx
-from etl_pipeline.infra.db_class import Arguments,Champions,Items,Traits
+from etl_pipeline.infra.db_class import Champions,Items,Traits,Aguments
 
 
 
 class DataDragonTransformer:
     fnames= ['arguments', 'champions', 'items', 'traits']
-    table_list = [Arguments, Champions, Items, Traits]
+    table_list = [Aguments, Champions, Items, Traits]
     cur_version = get_latest_version()
     base_path= f"/data_dragon/{cur_version}/"
     

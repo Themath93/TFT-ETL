@@ -40,7 +40,10 @@ class MatchTransfomer:
                 
                 if type(match_ids) == list:
                     match_details = self.match_detail_api.get_match_details(match_ids=match_ids)
-                    match_list = match_details["match_details"]
+                    try:
+                        match_list = match_details["match_details"]
+                    except:
+                        print(match_details)
                     
                      
                     

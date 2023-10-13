@@ -8,7 +8,17 @@ from etl_pipeline.infra.db_class import UserInfo
 
 
 class MatchIdExtractor:
+    """
+    Match Id Extractor from Roit API
     
+    Parameters
+    ----------
+    tier : str default  "all"
+        TFT Rank 
+        example : "BRONE", "SILVER" ...
+        if "all" it will extract all match_id in ["IRON", "BRONZE", "SILVER", "PLATINUM", "DIAMOND"]
+    
+    """
     broker=["kafka:19092"]
     topic="match-id"
     base_path = "/home/worker/tft-app/etl_pipeline/"
@@ -20,7 +30,12 @@ class MatchIdExtractor:
         self.puuids = list(map(lambda e: e[0],self.user_info))
         self.end_time=end_time
     
-    def extract(self):
+    def extract(self) -> None:
+        """
+        Match_id Extract with puuids. 
+        and send kafka broker datas that JSON typed.
+        
+        """
         for puuid in self.puuids:
             match_api = MatchIdAPI(
                 api_key= self.api_key,
@@ -32,6 +47,4 @@ class MatchIdExtractor:
                 "data":match_ids
             }
             self.kafka_producer.send_my(msg=msg)
-
-MatchIdExtractor().extract()
             

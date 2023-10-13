@@ -6,7 +6,10 @@ from etl_pipeline.infra.db_class import UserInfo
 
 
 class UserTransformer:
-    topic = "tft-user-info"
+    """
+    transform user_info from kafka to mysql "USER_INFO" table.
+    """
+    topic = "tft-high-user"
     groud_id = "UserTransformer-python"
     broker=["kafka:19092"]
     
@@ -20,12 +23,20 @@ class UserTransformer:
     def transform(self):
         while True:
             for msg in self.kafka_cousumer:
+                
                 msg_list = json.loads(msg.value)
-                for m in msg_list:
-                    if type(m) == str :
-                        print(m)
-                        pass
-                    else :
-                        data = list(map(lambda e:1 if e == True else e,m.values()))
-                        data = list(map(lambda e:0 if e == False else e,data))
-                        UserInfo.insert(data=data)
+                if type(msg_list == dict):
+                    data = list(map(lambda e:1 if e == True else e,msg_list.values()))
+                    data = list(map(lambda e:0 if e == False else e,data))
+                    UserInfo().insert(data=data)
+                else:
+                    for m in msg_list:
+                        if type(m) == str :
+                            print(m)
+                            pass
+                        else :
+                            data = list(map(lambda e:1 if e == True else e,m.values()))
+                            data = list(map(lambda e:0 if e == False else e,data))
+                            UserInfo().insert(data=data)
+            
+            break

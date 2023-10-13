@@ -1,19 +1,28 @@
 import os
 import sys
 
-
+## extract Moudules
 from etl_pipeline.extract.datadragon_extractor import DataDragonExtractor
+from etl_pipeline.extract.user_extractor import UserExtractor
+from etl_pipeline.extract.match_extractor import MatchIdExtractor
+
 from etl_pipeline.transform.match_transformer import MatchTransfomer
+from etl_pipeline.transform.datadragon_tranformer import DataDragonTransformer
+from etl_pipeline.transform.user_transformer import UserTransformer
 
 def main():
     """ Main entry point of the app """
     works = {
         "extract":{
-            "data_dragon":DataDragonExtractor("all").extract
+            "data_dragon":DataDragonExtractor("all").extract,
+            "user_extract":UserExtractor(user_tier="low").extract,
+            "high_user_extract":UserExtractor(user_tier="high").extract,
+            "matctId_extract":MatchIdExtractor()
         },
         "transform":{
-            "data_dragon":None,
-            "match_detail": MatchTransfomer().transform
+            "data_dragon":DataDragonTransformer().transform,
+            "user_transform":UserTransformer().transform,
+            "match_detail": MatchTransfomer().transform,
         }
     }
     return works
