@@ -1,5 +1,6 @@
 import json
 import requests
+import time
 
 import redis
 
@@ -30,3 +31,22 @@ def limit_counter() -> None:
     conn_redis = redis.Redis(host="redis",password=redis_info[0])
     limit_counter = RedisAPILimitCounter(conn_redis=conn_redis,key=redis_info[1])
     limit_counter.plus()
+    
+    
+def get_epoch_time(hour=1) -> int:
+    """
+    get Unix epoch time.
+    
+    Returns : int : current epoch time - hour(argument)
+    ---------
+    
+    Parameters
+    ----------
+    hour : int default 1
+        the number of hour you want.
+    
+    """
+    
+    cur_time = int(time.time())
+    base_second = 3600 # second
+    return cur_time - base_second * hour

@@ -1,14 +1,20 @@
 import os
 import sys
+import time
 
 ## extract Moudules
 from etl_pipeline.extract.datadragon_extractor import DataDragonExtractor
 from etl_pipeline.extract.user_extractor import UserExtractor
 from etl_pipeline.extract.match_extractor import MatchIdExtractor
 
+## transform Moudules
 from etl_pipeline.transform.match_transformer import MatchTransfomer
 from etl_pipeline.transform.datadragon_tranformer import DataDragonTransformer
 from etl_pipeline.transform.user_transformer import UserTransformer
+
+
+## utils
+from etl_pipeline.api_utils.api_util import get_epoch_time
 
 def main():
     """ Main entry point of the app """
@@ -17,7 +23,7 @@ def main():
             "data_dragon":DataDragonExtractor("all").extract,
             "user_extract":UserExtractor(user_tier="low").extract,
             "high_user_extract":UserExtractor(user_tier="high").extract,
-            "matctId_extract":MatchIdExtractor()
+            "matctId_extract":MatchIdExtractor(end_time=get_epoch_time(6)).extract,
         },
         "transform":{
             "data_dragon":DataDragonTransformer().transform,

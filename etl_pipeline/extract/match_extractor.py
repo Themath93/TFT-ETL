@@ -1,5 +1,4 @@
 
-
 from etl_pipeline.api_utils.match_api import MatchIdAPI
 from etl_pipeline.api_utils.match_api import MatchDetailAPI
 from etl_pipeline.infra.kafka_client import MessageProducer
@@ -17,6 +16,8 @@ class MatchIdExtractor:
         TFT Rank 
         example : "BRONE", "SILVER" ...
         if "all" it will extract all match_id in ["IRON", "BRONZE", "SILVER", "PLATINUM", "DIAMOND"]
+    end_time : int default 1624244400 2021-06-21
+        Extract time cutting line
     
     """
     broker=["kafka:19092"]
