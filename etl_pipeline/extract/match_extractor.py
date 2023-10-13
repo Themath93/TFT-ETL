@@ -14,10 +14,11 @@ class MatchIdExtractor:
     base_path = "/home/worker/tft-app/etl_pipeline/"
     with open(f"{base_path}api_key.txt", "r") as f:
         api_key = f.readline()
-    def __init__(self,tier="all") -> None:
-        self.kafka_producer = kafka_producer = MessageProducer(broker=self.broker,topic=self.topic)
+    def __init__(self,tier="all",end_time=1624244400) -> None:
+        self.kafka_producer = MessageProducer(broker=self.broker,topic=self.topic)
         self.user_info = UserInfo().get_puuid_list(tier)
         self.puuids = list(map(lambda e: e[0],self.user_info))
+        self.end_time=end_time
     
     def extract(self):
         for puuid in self.puuids:

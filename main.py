@@ -3,6 +3,7 @@ import sys
 
 
 from etl_pipeline.extract.datadragon_extractor import DataDragonExtractor
+from etl_pipeline.transform.match_transformer import MatchTransfomer
 
 def main():
     """ Main entry point of the app """
@@ -11,7 +12,8 @@ def main():
             "data_dragon":DataDragonExtractor("all").extract
         },
         "transform":{
-            "data_dragon":None
+            "data_dragon":None,
+            "match_detail": MatchTransfomer().transform
         }
     }
     return works

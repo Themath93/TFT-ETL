@@ -37,7 +37,10 @@ class UserInfo:
         # self.user_info= dict(zip(self.tables,data))
         self.cnx =  mysql_cnx()
         self.cursor = self.cnx.cursor()
-        
+    
+    def get_cols(self) -> list:
+        return self.columns
+    
     def insert(self,data=list):
         try:
             data= tuple(data)
@@ -88,6 +91,9 @@ class Traits:
         self.cnx =  mysql_cnx()
         self.cursor = self.cnx.cursor()
         
+    def get_cols(self) -> list:
+        return self.columns
+        
     def insert(self,data=list):
         try:
             data= tuple(data)
@@ -95,7 +101,6 @@ class Traits:
             self.cnx.commit()
         except:
             pass
-
 
 class Champions:
     """
@@ -120,6 +125,9 @@ class Champions:
         self.cnx =  mysql_cnx()
         self.cursor = self.cnx.cursor()
         
+    def get_cols(self) -> list:
+        return self.columns
+    
     def insert(self,data=list):
         try:
             data= tuple(data)
@@ -128,14 +136,14 @@ class Champions:
         except:
             pass
 
-class Arguments:
+class Aguments:
     """
-    Mysql Table "ARGUMENTS" class
+    Mysql Table "AGUMENTS" class
     
     
     """
 
-    table_name = "ARGUMENTS"
+    table_name = "AGUMENTS"
     columns = [
         "version", "code_id",
         "name", "image"
@@ -150,6 +158,9 @@ class Arguments:
     def __init__(self) -> None:
         self.cnx =  mysql_cnx()
         self.cursor = self.cnx.cursor()
+    
+    def get_cols(self) -> list:
+        return self.columns
         
     def insert(self,data=list):
         try:
@@ -158,7 +169,6 @@ class Arguments:
             self.cnx.commit()
         except:
             pass
-
 
 class Items:
     """
@@ -182,6 +192,149 @@ class Items:
     def __init__(self) -> None:
         self.cnx =  mysql_cnx()
         self.cursor = self.cnx.cursor()
+    
+    def get_cols(self) -> list:
+        return self.columns
+        
+    def insert(self,data=list):
+        try:
+            data= tuple(data)
+            self.cursor.execute(self.sql,data)
+            self.cnx.commit()
+        except:
+            pass
+        
+class MatchInfo:
+    """
+    Mysql Table "MATCH_INFO" class
+    
+    
+    """
+
+    table_name = "MATCH_INFO"
+    columns = [
+        "match_id", "data_version", "participants",
+        "game_datetime", "game_length", "game_version"
+    ] 
+    column_str = ", ".join(columns)
+    form_str= ", ".join(["%s"]*len(columns))
+    sql = f""" 
+        INSERT INTO {table_name} \n
+        ({column_str}) \n
+        VALUES ({form_str})
+    """
+    def __init__(self) -> None:
+        self.cnx =  mysql_cnx()
+        self.cursor = self.cnx.cursor()
+        
+    def get_cols(self) -> list:
+        return self.columns
+        
+    def insert(self,data=list):
+        try:
+            data= tuple(data)
+            self.cursor.execute(self.sql,data)
+            self.cnx.commit()
+        except:
+            pass
+        
+class MatchDetail:
+    """
+    Mysql Table "MATCH_DETAIL" class
+    
+    
+    """
+
+    table_name = "MATCH_DETAIL"
+    columns = [
+        "puuid", "match_id", "augments",
+        "companion", "gold_left", "last_round",
+        "level" , "placement", "players_eliminated",
+        "time_eliminated", "total_damage_to_players"
+    ]
+    column_str = ", ".join(columns)
+    form_str= ", ".join(["%s"]*len(columns))
+    sql = f"""
+        INSERT INTO {table_name} \n
+        ({column_str}) \n
+        VALUES ({form_str})
+    """
+    def __init__(self) -> None:
+        self.cnx =  mysql_cnx()
+        self.cursor = self.cnx.cursor()
+        
+    def get_cols(self) -> list:
+        return self.columns
+        
+    def insert(self,data=list):
+        try:
+            data= tuple(data)
+            self.cursor.execute(self.sql,data)
+            self.cnx.commit()
+        except:
+            pass
+        
+class TraitsDetail:
+    """
+    Mysql Table "TRAITS_DETAIL" class
+    
+    
+    """
+
+    table_name = "TRAITS_DETAIL"
+    columns = [
+        "puuid", "match_id", "name", 
+        "num_units", "style", "tier_current",
+        "tier_total"
+    ] 
+    column_str = ", ".join(columns)
+    form_str= ", ".join(["%s"]*len(columns))
+    sql = f""" 
+        INSERT INTO {table_name} \n
+        ({column_str}) \n
+        VALUES ({form_str})
+    """
+    def __init__(self) -> None:
+        self.cnx =  mysql_cnx()
+        self.cursor = self.cnx.cursor()
+        
+    def get_cols(self) -> list:
+        return self.columns
+        
+    def insert(self,data=list):
+        try:
+            data= tuple(data)
+            self.cursor.execute(self.sql,data)
+            self.cnx.commit()
+        except:
+            pass        
+
+class UnitsDetail:
+    """
+    Mysql Table "UNITS_DETAIL" class
+    
+    
+    """
+
+    table_name = "UNITS_DETAIL"
+    columns = [
+        "puuid", "match_id", "charactor_id", 
+        "item_names", "name", "rarity",
+        "tier" 
+    ] 
+    column_str = ", ".join(columns)
+    form_str= ", ".join(["%s"]*len(columns))
+    sql = f""" 
+        INSERT INTO {table_name} \n
+        ({column_str}) \n
+        VALUES ({form_str})
+    """
+    def __init__(self) -> None:
+        self.cnx =  mysql_cnx()
+        self.cursor = self.cnx.cursor()
+        
+    def get_cols(self) -> list:
+        return self.columns
         
     def insert(self,data=list):
         try:
